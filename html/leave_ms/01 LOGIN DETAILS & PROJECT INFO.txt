@@ -1,0 +1,40 @@
+**Log on to codeastro.com for more projects!***
+
+**Database Name: onlineleavedb**
+
+**Developed by Yash Sojitra, Darshan Mamtani**
+
+**Recommended PHP Version 5.6 or Newer**
+
+
+**Admin Login Details**
+
+Username: liam
+Password: Password@123
+
+
+ function encryption ($password){
+        $BlowFishFormate = "$2y$10$";
+        $salt = generateSalt(22);
+        $BlowFish_Plus_Salt = $BlowFishFormate . $salt;
+        $Hash = crypt($password, $BlowFish_Plus_Salt);
+
+        return $Hash;
+    }
+
+    function generateSalt($length){
+        $uniqueRandomString = md5(uniqid(mt_rand(), true));
+        $base64String = base64_encode($uniqueRandomString);
+        $modifiedBase64String = str_replace('+','.',$base64String);
+        $salt = substr($modifiedBase64String,0,$length);
+
+        return $salt;
+    }
+
+    function passwordCheck($password, $existingHash){
+        $Hash = crypt($password, $existingHash);
+        if($Hash === $existingHash)
+            return true;
+        else
+            return false;
+    }
